@@ -21,9 +21,8 @@ public class Transaction {
     @Id
     private Integer id;
 
-    @JoinColumn(name = "FROM_ACC_ID_ID", nullable = false)
-    @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "FROM_ACC_ID_ID")
+    @ManyToOne(fetch = FetchType.LAZY)
     private BankAccount from_acc_id;
 
     @JoinColumn(name = "TO_ACC_ID_ID")
@@ -37,11 +36,28 @@ public class Transaction {
 
     @Column(name = "TRANSFER_AMOUNT", precision = 19, scale = 2)
     private BigDecimal transfer_amount;
+
     @JoinTable(name = "TRANS_TO_TYPE_TRANSACTION_LINK",
-            joinColumns = @JoinColumn(name = "TRANSACTION_ID"),
-            inverseJoinColumns = @JoinColumn(name = "TRANSACTION_TO_TYPE_ID"))
+            joinColumns = @JoinColumn(name = "TRANSACTION_ID", referencedColumnName = "ID"),
+            inverseJoinColumns = @JoinColumn(name = "TRANSACTION_TO_TYPE_ID", referencedColumnName = "id"))
     @ManyToMany
     private List<TransactionToType> transactionToTypes;
+
+    public BankAccount getTo_acc_id() {
+        return to_acc_id;
+    }
+
+    public void setTo_acc_id(BankAccount to_acc_id) {
+        this.to_acc_id = to_acc_id;
+    }
+
+    public BankAccount getFrom_acc_id() {
+        return from_acc_id;
+    }
+
+    public void setFrom_acc_id(BankAccount from_acc_id) {
+        this.from_acc_id = from_acc_id;
+    }
 
     public List<TransactionToType> getTransactionToTypes() {
         return transactionToTypes;
@@ -65,22 +81,6 @@ public class Transaction {
 
     public void setCreate_date(Date create_date) {
         this.create_date = create_date;
-    }
-
-    public BankAccount getTo_acc_id() {
-        return to_acc_id;
-    }
-
-    public void setTo_acc_id(BankAccount to_acc_id) {
-        this.to_acc_id = to_acc_id;
-    }
-
-    public BankAccount getFrom_acc_id() {
-        return from_acc_id;
-    }
-
-    public void setFrom_acc_id(BankAccount from_acc_id) {
-        this.from_acc_id = from_acc_id;
     }
 
     public Integer getId() {
