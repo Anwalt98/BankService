@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://jmix.io/schema/ui/window"
+        caption="msg://transactionToTypeEdit.caption"
+        focusComponent="form">
+    <data>
+        <instance id="transactionToTypeDc"
+                  class="com.company.bankservice.entity.TransactionToType">
+            <fetchPlan extends="_base">
+                <property name="type_id" fetchPlan="_base"/>
+                <property name="transaction_id" fetchPlan="_base"/>
+            </fetchPlan>
+            <loader/>
+            <collection id="type_idDc" property="type_id"/>
+            <collection id="transaction_idDc" property="transaction_id"/>
+        </instance>
+    </data>
+    <facets>
+        <dataLoadCoordinator auto="true"/>
+        <screenSettings id="settingsFacet" auto="true"/>
+    </facets>
+    <actions>
+        <action id="windowCommitAndClose" caption="msg:///actions.Ok"
+                icon="EDITOR_OK"
+                primary="true"
+                shortcut="${COMMIT_SHORTCUT}"/>
+        <action id="windowClose"
+                caption="msg:///actions.Close"
+                icon="EDITOR_CANCEL"/>
+    </actions>
+    <dialogMode height="600"
+                width="800"/>
+    <layout spacing="true" expand="editActions">
+        <form id="form" dataContainer="transactionToTypeDc">
+            <column width="350px">
+                <textField id="idField" property="id"/>
+            </column>
+        </form>
+        <groupBox id="type_idBox" caption="msg://com.company.bankservice.entity/TransactionToType.type_id">
+            <table id="type_idTable" dataContainer="type_idDc" width="100%" height="200px">
+                <actions>
+                    <action id="add" type="add"/>
+                    <action id="exclude" type="exclude"/>
+                </actions>
+                <columns>
+                    <column id="name"/>
+                </columns>
+                <buttonsPanel>
+                    <button action="type_idTable.add"/>
+                    <button action="type_idTable.exclude"/>
+                </buttonsPanel>
+            </table>
+        </groupBox>
+        <groupBox id="transaction_idBox"
+                  caption="msg://com.company.bankservice.entity/TransactionToType.transaction_id">
+            <table id="transaction_idTable" dataContainer="transaction_idDc" width="100%" height="200px">
+                <actions>
+                    <action id="add" type="add"/>
+                    <action id="exclude" type="exclude"/>
+                </actions>
+                <columns>
+                    <column id="create_date"/>
+                    <column id="transfer_amount"/>
+                </columns>
+                <buttonsPanel>
+                    <button action="transaction_idTable.add"/>
+                    <button action="transaction_idTable.exclude"/>
+                </buttonsPanel>
+            </table>
+        </groupBox>
+        <hbox id="editActions" spacing="true">
+            <button id="commitAndCloseBtn" action="windowCommitAndClose"/>
+            <button id="closeBtn" action="windowClose"/>
+        </hbox>
+    </layout>
+</window>
